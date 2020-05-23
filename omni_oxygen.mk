@@ -2,6 +2,8 @@
 # Copyright (C) 2011 The Android Open Source Project
 # Copyright (C) 2015-2016 The CyanogenMod Project
 #
+# Copyright (C) 2018-2020 The OrangeFox Recovery Project
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -15,12 +17,32 @@
 # limitations under the License.
 #
 
-# Inherit device configuration
-$(call inherit-product, $(LOCAL_PATH)/device.mk)
+# Release name
+PRODUCT_RELEASE_NAME := oxygen
+
+# Product common configurations
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+$(call inherit-product, build/target/product/embedded.mk)
+
+# Inherit from our custom product configuration
+$(call inherit-product, vendor/omni/config/common.mk)
+
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images
+
+# Encryption
+PRODUCT_PACKAGES += \
+    libcryptfs_hw
 
 # Device display
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.keystore=msm8953
 
 # Device identifier
 PRODUCT_BRAND := Xiaomi
@@ -28,8 +50,4 @@ PRODUCT_DEVICE := oxygen
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_MODEL := Mi MAX 2
 PRODUCT_NAME := omni_oxygen
-PRODUCT_RELEASE_NAME := Mi MAX 2
-
-# Time Zone data for Recovery
-#PRODUCT_COPY_FILES += \
-#    bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
+#

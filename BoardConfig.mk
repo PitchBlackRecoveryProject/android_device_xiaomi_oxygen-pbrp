@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2017 The Android Open Source Project
 #
-# Copyright (C) 2018-2019 OrangeFox Recovery Project
+# Copyright (C) 2018-2020 OrangeFox Recovery Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,55 +18,45 @@
 
 LOCAL_PATH := device/xiaomi/oxygen
 
-# Platform
-TARGET_BOOTLOADER_BOARD_NAME := MSM8953
-
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
-TARGET_CPU_VARIANT := cortex-a53
+TARGET_CPU_VARIANT := generic
 
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv8-a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a53
+TARGET_2ND_CPU_VARIANT := armv8-a
 
 TARGET_BOARD_PLATFORM := msm8953
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno506
-
 TARGET_BOARD_SUFFIX := _64
-TARGET_USES_64_BIT_BINDER := true
+
+# Bootloader
+TARGET_BOOTLOADER_BOARD_NAME := MSM8953
+TARGET_NO_BOOTLOADER := true
 
 # Crypto
-TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/commonsys/cryptfs_hw
 TARGET_HW_DISK_ENCRYPTION := true
+TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/commonsys/cryptfs_hw
 TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE := true
 
-# Kernel information
+# Kernel
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 androidboot.selinux=permissive
-BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_PAGESIZE :=  2048
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET := 0x01000000
-
-# Treble
-BOARD_NEEDS_VENDORIMAGE_SYMLINK := false
-TARGET_COPY_OUT_VENDOR := vendor
-
-# OrangeFox Kernel
-ifeq ($(FOX_BUILD_FULL_KERNEL_SOURCES),)
-FOX_BUILD_FULL_KERNEL_SOURCES := 1
-endif
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 
 ifeq ($(FOX_BUILD_FULL_KERNEL_SOURCES),1)
-TARGET_KERNEL_SOURCE := kernel/xiaomi/oxygen
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-TARGET_KERNEL_CONFIG := oxygen-perf_defconfig
+TARGET_KERNEL_CONFIG := oxygen-fox_defconfig
+TARGET_KERNEL_SOURCE := kernel/xiaomi/oxygen
 else
 TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/Image.gz-dtb
 ifeq ($(FOX_USE_STOCK_KERNEL),1)
@@ -75,30 +65,21 @@ endif
 PRODUCT_COPY_FILES += \
     $(TARGET_PREBUILT_KERNEL):kernel
 endif
-# OrangeFox Kernel end
-
-# Kernel informations
-BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 androidboot.selinux=permissive
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_TAGS_OFFSET := 0x00000100
-BOARD_RAMDISK_OFFSET := 0x01000000
+# end DJ9
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 65536000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 65536000
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4194304000
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 8388591616 # (58846081024-16384)
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 8388591616
 BOARD_CACHEIMAGE_PARTITION_SIZE := 262144000
 BOARD_PERSISTIMAGE_PARTITION_SIZE := 65536000
-BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
-
-# Bootloader
-TARGET_NO_BOOTLOADER := true
+BOARD_FLASH_BLOCK_SIZE := 131072
 
 # Recovery
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
 
 # TWRP Configuration
 TW_THEME := portrait_hdpi
@@ -117,14 +98,9 @@ TWRP_INCLUDE_LOGCAT := true
 TW_EXTRA_LANGUAGES := true
 TW_INCLUDE_FUSE_EXFAT := true
 TARGET_USES_64_BIT_BINDER := true
-TW_INCLUDE_FUSE_NTFS := true
-
 #
 ifeq ($(FOX_USE_STOCK_KERNEL),1)
 TW_DEFAULT_BRIGHTNESS := 1850
 TW_MAX_BRIGHTNESS := 4095
 endif
-
-# Hack: prevent anti rollback
-PLATFORM_SECURITY_PATCH := 2099-12-31
 #
