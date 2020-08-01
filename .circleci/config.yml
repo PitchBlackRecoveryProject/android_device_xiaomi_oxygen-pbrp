@@ -9,10 +9,10 @@ jobs:
       MAINTAINER: '@sMaheshtechnicals0'
       VENDOR: 'xiaomi'
       CODENAME: 'oxygen'
-      BUILD_LUNCH: 'omni_oxygen-eng'
+      FLAVOR: 'eng'
       PB_OFFICIAL: 'true'
       CHANGELOG: |
-        - - Bringup 3.0 
+        - Bringup 3.0 
         - Source side changes 
         - Fully Redesigned UI 
         - New Android like Power Menu (Activated via power key hold) 
