@@ -36,5 +36,5 @@ workflows:
       - build:
           filters:
             branches:
-              only: 'pb_9.0'
+              only: 'android-9.0'
           context: org-global
