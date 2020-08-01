@@ -17,7 +17,9 @@ jobs:
         - Fully Redesigned UI 
         - New Android like Power Menu (Activated via power key hold) 
         - Flashlight toggled by Vol up(+) on hold 
-        - Flashlight toggle on Lockscreen 
+        - Flashlight toggle on Lockscreen
+        - Updated on Android Pie 
+        - Fix decryption issue 
         - Etc.
 
 
