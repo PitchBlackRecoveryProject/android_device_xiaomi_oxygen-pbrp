@@ -51,4 +51,4 @@ PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_MODEL := Mi MAX 2
 PRODUCT_NAME := omni_oxygen
 #
-9
+
