@@ -10,9 +10,9 @@ jobs:
       VENDOR: 'xiaomi'
       CODENAME: 'oxygen'
       FLAVOR: 'eng'
-      PB_OFFICIAL: 'true'
+      TEST_BUILD: 'true'
       CHANGELOG: |
-        - Bringup 3.0 
+        - Bringup 3.1 
         - Source side changes 
         - Fully Redesigned UI 
         - New Android like Power Menu (Activated via power key hold) 
